@@ -7,8 +7,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -38,13 +38,9 @@ public class TestCat {
     }
 
     @Test
-    public void testGetFood_Exception() {
-        try {
-            Mockito.when(felineMock.eatMeat()).thenThrow(new Exception("Неизвестный вид животного, используйте значение Травоядное или Хищник"));
-            cat.getFood();
-            fail("Ожидается исключение");
-        } catch (Exception e) {
-            assertEquals("Исключение отличается от ожидаемого","Неизвестный вид животного, используйте значение Травоядное или Хищник", e.getMessage());
-        }
+    public void testGetFood_Exception() throws Exception {
+        Mockito.when(felineMock.eatMeat()).thenThrow(new Exception("Неизвестный вид животного, используйте значение Травоядное или Хищник"));
+        Exception exception = assertThrows(Exception.class, () -> cat.getFood());
+        assertEquals("Неизвестный вид животного, используйте значение Травоядное или Хищник", exception.getMessage());
     }
 }

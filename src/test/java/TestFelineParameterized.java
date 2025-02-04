@@ -14,7 +14,7 @@ public class TestFelineParameterized {
         this.expectedKittensCount = expectedKittensCount;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: {0} -> {1}")
     public static Object[][] getKittensData() {
         return new Object[][]{
                 {1, 1},

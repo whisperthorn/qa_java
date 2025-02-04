@@ -7,8 +7,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,7 +24,7 @@ public class TestLion {
     }
 
     @Test
-    public void testGetKittens(){
+    public void testGetKittens() {
         int expectedKittens = 1;
         when(felineMock.getKittens()).thenReturn(1);
         int actualKittens = lion.getKittens();
@@ -40,13 +40,15 @@ public class TestLion {
     }
 
     @Test
-    public void testGetFood_Exception() {
-        try {
-            Mockito.when(felineMock.eatMeat()).thenThrow(new Exception("Неизвестный вид животного, используйте значение Травоядное или Хищник"));
-            lion.getFood();
-            fail("Ожидается исключение");
-        } catch (Exception e) {
-            assertEquals("Исключение отличается от ожидаемого","Неизвестный вид животного, используйте значение Травоядное или Хищник", e.getMessage());
-        }
+    public void testGetFood_Exception() throws Exception {
+        Mockito.when(felineMock.eatMeat()).thenThrow(new Exception("Неизвестный вид животного, используйте значение Травоядное или Хищник"));
+        Exception exception = assertThrows(Exception.class, () -> lion.getFood());
+        assertEquals("Неизвестный вид животного, используйте значение Травоядное или Хищник", exception.getMessage());
+    }
+
+    @Test
+    public void testConstructor_Exception()  {
+        Exception exception = assertThrows(Exception.class, () -> new Lion("Unknown", felineMock));
+        assertEquals("Используйте допустимые значения пола животного - самец или самка", exception.getMessage());
     }
 }

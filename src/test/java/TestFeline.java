@@ -2,8 +2,8 @@ import com.example.Feline;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+
+import static org.junit.Assert.*;
 
 public class TestFeline {
     private Feline feline;
@@ -31,12 +31,8 @@ public class TestFeline {
     }
 
     @Test
-    public void testGetFood_Exception(){
-        try {
-            feline.getFood("Неизвестное Животное");
-            fail("Ожидается исключение");
-        } catch (Exception e) {
-            assertEquals("Исключение отличается от ожидаемого","Неизвестный вид животного, используйте значение Травоядное или Хищник", e.getMessage());
-        }
+    public void testGetFood_Exception() {
+        Exception exception = assertThrows(Exception.class, () -> feline.getFood("Неизвестное Животное"));
+        assertEquals("Неизвестный вид животного, используйте значение Травоядное или Хищник", exception.getMessage());
     }
 }

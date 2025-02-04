@@ -17,23 +17,18 @@ public class TestLionParameterized {
         this.expectedMane = expectedMane;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: {0} -> {1}")
     public static Object[][] getLionData() {
         return new Object[][]{
                 {"Самец", true},
-                {"Самка", false},
-                {"Unknown", false}
+                {"Самка", false}
         };
     }
 
     @Test
-    public void testLionConstructorWithParameters() {
+    public void testLionConstructorWithParameters() throws Exception {
         Feline felineMock = Mockito.mock(Feline.class);
-        try{
-            Lion lion = new Lion(inputGender, felineMock);
-            assertEquals("Грива не соответствует ожидаемой", expectedMane, lion.doesHaveMane());
-        } catch (Exception e) {
-            assertEquals("Исключение отличается от ожидаемого","Используйте допустимые значения пола животного - самец или самка", e.getMessage());
-        }
+        Lion lion = new Lion(inputGender, felineMock);
+        assertEquals("Грива не соответствует ожидаемой", expectedMane, lion.doesHaveMane());
     }
 }
